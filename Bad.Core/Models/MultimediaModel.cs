@@ -3,8 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bad.Core.Models
 {
-    public class MultimediaModel: BaseEntityModel<long>
+    public class MultimediaModel : BaseEntityModel<long>
     {
+        public MultimediaModel() { }
+        public MultimediaModel(string url, MultimediaTypeEnum type, string title = "", string description = "")
+        {
+            Url = url;
+            Type = type;
+            Title = title;
+            Description = description;
+        }
         public string Url { get; set; }
         public MultimediaTypeEnum Type { get; set; }
         public string Title { get; set; }
