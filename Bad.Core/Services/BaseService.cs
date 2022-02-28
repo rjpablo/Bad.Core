@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bad.Core.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Threading.Tasks;
 
 namespace Bad.Core.Services
 {
@@ -10,6 +12,11 @@ namespace Bad.Core.Services
         public BaseService(DbContext context)
         {
             _context = context;
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
         }
 
         public IDbContextTransaction BeginTransaction()
