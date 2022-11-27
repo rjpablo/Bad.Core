@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Bad.Core.Models
 {
-    public class PhotoModel : MultimediaModel
+    public class PhotoModel
     {
         public new MultimediaTypeEnum Type { get; } = MultimediaTypeEnum.Photo;
     }
