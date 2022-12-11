@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Configurations>Debug;Release;Localhost</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DataAnnotationsExtensions" Version="5.0.1.27" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bad.Core\Bad.Core.csproj" />
+  </ItemGroup>
+
+</Project>
