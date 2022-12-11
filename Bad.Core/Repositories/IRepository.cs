@@ -16,6 +16,7 @@ namespace Bad.Core.Repositories
             string includeProperties = "");
         Task<TEntity> GetByIDAsync(TIdType id);
         void Insert(TEntity entity);
+        void Insert(IEnumerable<TEntity> entity);
         void Delete(object id);
         void Delete(TEntity entityToDelete);
         void Update(TEntity entityToUpdate);

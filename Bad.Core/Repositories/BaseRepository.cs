@@ -1,6 +1,8 @@
 ﻿using Bad.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -54,8 +56,15 @@ namespace Bad.Core.Repositories
 
         public virtual void Insert(TEntity entity)
         {
-            entity.DateCreated = DateTime.Now;
+            entity.DateCreated = DateTime.UtcNow;
             _dbSet.Add(entity);
+        }
+
+        public virtual void Insert(IEnumerable<TEntity> entity)
+        {
+            var entityList = entity.ToList();
+            entityList.ForEach(entity => entity.DateCreated = DateTime.UtcNow);
+            _dbSet.AddRange(entityList);
         }
 
         public virtual void Delete(object id)
