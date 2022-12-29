@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bad.Core", "Bad.Core\Bad.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bad.Events", "Bad.Events\Bad.Events.csproj", "{B6F383C2-B4C4-455C-8063-66A825352F93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bad.Notifications", "Bad.Notifications\Bad.Notifications.csproj", "{BE6477FD-C6A4-440C-8DFB-101D222651BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,12 @@ Global
 		{B6F383C2-B4C4-455C-8063-66A825352F93}.Localhost|Any CPU.Build.0 = Localhost|Any CPU
 		{B6F383C2-B4C4-455C-8063-66A825352F93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6F383C2-B4C4-455C-8063-66A825352F93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE6477FD-C6A4-440C-8DFB-101D222651BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE6477FD-C6A4-440C-8DFB-101D222651BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE6477FD-C6A4-440C-8DFB-101D222651BE}.Localhost|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE6477FD-C6A4-440C-8DFB-101D222651BE}.Localhost|Any CPU.Build.0 = Debug|Any CPU
+		{BE6477FD-C6A4-440C-8DFB-101D222651BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE6477FD-C6A4-440C-8DFB-101D222651BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
