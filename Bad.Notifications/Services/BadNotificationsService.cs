@@ -1,4 +1,5 @@
-﻿using Bad.Notifications.Models;
+﻿using Bad.Notifications.Exceptions;
+using Bad.Notifications.Models;
 using Bad.Notifications.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -63,6 +64,22 @@ namespace Bad.Notifications.Services
                 AsOf = DateTime.UtcNow
             };
         }
+
+        public async Task<UnviewedCountModel> SetIsViewedAsync(int notificationId, string userId, bool isViewed = true)
+        {
+            var notification = await _badNotificationsRepository.GetByIDAsync(notificationId);
+            if (notification.Recipient == userId)
+            {
+                notification.IsViewed = isViewed;
+                await _badNotificationsRepository.SaveChangesAsync();
+                return await GetUnviewedCountAsync(userId);
+            }
+            else
+            {
+                throw new BadNotificationException(BadNotificationExceptionType.NotNotificationRecipient,
+                    "User tried to set IsViewed of a notification that's intended for someone else.");
+            }
+        }
     }
 
     public interface IBadNotificationsService
@@ -70,5 +87,6 @@ namespace Bad.Notifications.Services
         Task<IEnumerable<BadNotificationMessage>> GetNotifications(string forUserId, DateTime? beforeDate, int getCount = 5);
         Task<GetNewNotificationsResultModel> GetNewNotifications(string forUserId, DateTime afterDate);
         Task<UnviewedCountModel> GetUnviewedCountAsync(string forUserId);
+        Task<UnviewedCountModel> SetIsViewedAsync(int notificationId, string userId, bool isViewed = true);
     }
 }
