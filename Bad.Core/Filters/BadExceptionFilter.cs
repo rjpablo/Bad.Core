@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
@@ -10,6 +11,12 @@ namespace Bad.Core.Filters
 {
     public class BadExceptionFilter : Attribute, IExceptionFilter
     {
+        private readonly ILogger<BadExceptionFilter> _logger;
+
+        public BadExceptionFilter(ILogger<BadExceptionFilter> logger)
+        {
+            _logger = logger;
+        }
         public void OnException(ExceptionContext context)
         {
             HttpStatusCode status = HttpStatusCode.InternalServerError;
@@ -32,8 +39,9 @@ namespace Bad.Core.Filters
                 status = HttpStatusCode.InternalServerError;
             }
 
+            _logger.LogError(context.Exception, "Unhandled exception encountered.");
             var result = new JsonResult(
-                new { message = context.Exception.Message, stack = context.Exception.StackTrace },
+                new { message = "An unexpected error occurred" },
                 new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
