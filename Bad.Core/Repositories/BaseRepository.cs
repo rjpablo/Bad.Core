@@ -24,7 +24,7 @@ namespace Bad.Core.Repositories
         public virtual IQueryable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
+            string includeProperties = "", int? take = null, int? skip = 0)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -41,12 +41,20 @@ namespace Bad.Core.Repositories
 
             if (orderBy != null)
             {
-                return orderBy(query);
+                query = orderBy(query);
             }
-            else
+
+            if (skip > 0)
             {
-                return query;
+                query = query.Skip(skip.Value);
             }
+
+            if (take > 0)
+            {
+                query = query.Take(take.Value);
+            }
+
+            return query;
         }
 
         public virtual async Task<TEntity> GetByIDAsync(TIdType id)
@@ -119,7 +127,7 @@ namespace Bad.Core.Repositories
         }
         #endregion
     }
-    public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity: BaseEntityModel
+    public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntityModel
     {
         internal DbContext _context;
         internal DbSet<TEntity> _dbSet;
@@ -130,7 +138,7 @@ namespace Bad.Core.Repositories
             _dbSet = _context.Set<TEntity>();
         }
 
-        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+        public IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "", int? take = null, int? skip = 0)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -139,20 +147,28 @@ namespace Bad.Core.Repositories
                 query = query.Where(filter);
             }
 
+            if (orderBy != null)
+            {
+                query = query = orderBy(query);
+            }
+
+            if (skip > 0)
+            {
+                query = query.Skip(skip.Value);
+            }
+
+            if (take > 0)
+            {
+                query = query.Take(take.Value);
+            }
+
             foreach (var includeProperty in includeProperties.Split
                 (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }
 
-            if (orderBy != null)
-            {
-                return orderBy(query);
-            }
-            else
-            {
-                return query;
-            }
+            return query;
         }
 
         public void Insert(TEntity entity)

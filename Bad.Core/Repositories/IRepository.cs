@@ -13,7 +13,7 @@ namespace Bad.Core.Repositories
         IQueryable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "");
+            string includeProperties = "", int? take = null, int? skip = 0);
         Task<TEntity> GetByIDAsync(TIdType id);
         void Insert(TEntity entity);
         void Insert(IEnumerable<TEntity> entity);
@@ -29,7 +29,7 @@ namespace Bad.Core.Repositories
         IQueryable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "");
+            string includeProperties = "", int? take = null, int? skip = 0);
         void Insert(TEntity entity);
         void Delete(TEntity entityToDelete);
         void Update(TEntity entityToUpdate);
