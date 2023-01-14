@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 
 namespace Bad.Core.Extensions
@@ -9,13 +10,17 @@ namespace Bad.Core.Extensions
         {
             logger.LogError(e, e.Message);
         }
-        public static void LogError<T>(this ILogger<T> logger, Exception e, string methodName)
+        public static void LogError<T>(this ILogger<T> logger, Exception e, string errorMessage, string methodName, object input)
         {
-            logger.LogError(e, $"{methodName} failed. {e.Message}.");
+            logger.LogError(e, $"{methodName} failed. {errorMessage}. Inputs: {JsonConvert.SerializeObject(input)}");
         }
-        public static void LogError<T>(this ILogger<T> logger, Exception e, string methodName, string errorMessage, object input)
+        public static void LogWarning<T>(this ILogger<T> logger, Exception e)
         {
-            logger.LogError(e, $"{methodName} failed. {errorMessage}. Inputs: {input}");
+            logger.LogWarning(e, e.Message);
+        }
+        public static void LogWarning<T>(this ILogger<T> logger, Exception e, string errorMessage, string methodName, object input)
+        {
+            logger.LogWarning(e, $"{methodName} failed. {errorMessage}. Inputs: {JsonConvert.SerializeObject(input)}");
         }
 
     }
